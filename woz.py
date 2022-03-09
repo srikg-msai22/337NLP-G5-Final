@@ -97,7 +97,7 @@ def main():
 
     gen_mode = 0
     gen_labels = ['logits', 'greedy', 'beam', 'top-p']
-    tuned_model = 2
+    tuned_model = 0
 
     if tuned_model == 0:
         tuned = 'gpt2'
