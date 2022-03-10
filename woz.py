@@ -92,8 +92,8 @@ def make_woz_datasets(bKnowledge):
 
 
 def main():
-    make_woz_datasets(True)
-    make_woz_datasets(False)
+    # make_woz_datasets(True)
+    # make_woz_datasets(False)
 
     gen_mode = 0
     gen_labels = ['logits', 'greedy', 'beam', 'top-p']
@@ -146,6 +146,8 @@ def main():
             ref = text[1].strip(' ')
             obs = obs + 1
             in_ids = tokenizer.encode(prompt, add_special_tokens=True)
+            if len(prompt) >= 145:
+                continue
 
             if gen_mode == 0:
                 seq_len = 0
