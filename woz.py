@@ -170,6 +170,7 @@ def main():
                     input_ids = torch.tensor(in_ids).unsqueeze(0)
                     text = tokenizer.decode(input_ids[0], skip_special_tokens=True)
                     tokens = text.split(' ')
+                    print(tokens)
                     if tokens[len(tokens) - 1] == '[END]':
                         bDone = True
                     if len(tokens) >= max_len:
