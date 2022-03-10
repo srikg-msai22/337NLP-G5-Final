@@ -168,6 +168,7 @@ def main():
                     if len(tokens) >= max_len:
                         bDone = True
 
+            # greedy
             if gen_mode == 1:
                 input_ids = torch.tensor(in_ids).unsqueeze(0)
                 input_ids = input_ids.cuda()
@@ -175,6 +176,7 @@ def main():
                 text2 = tokenizer.decode(greedy[0], skip_special_tokens=False)
                 tokens = text2.split()
 
+            # beam search
             if gen_mode == 2:
                 input_ids = torch.tensor(in_ids).unsqueeze(0)
                 input_ids = input_ids.cuda()
@@ -183,6 +185,7 @@ def main():
                 text2 = tokenizer.decode(beam[0], skip_special_tokens=False)
                 tokens = text2.split()
 
+            # top_p
             if gen_mode == 3:
                 input_ids = torch.tensor(in_ids).unsqueeze(0)
                 input_ids = input_ids.cuda()
