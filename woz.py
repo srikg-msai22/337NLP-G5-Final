@@ -167,7 +167,8 @@ def main():
                     decoded = torch.tensor(decoded)
                     decoded = decoded.cuda()
                     in_ids.append(decoded[decoded.size(0) - 1].item())
-                    input_ids = torch.tensor(in_ids).unsqueeze(0)
+                    # input_ids = torch.tensor(in_ids).unsqueeze(0)
+                    input_ids = torch.tensor(in_ids)
                     text = tokenizer.decode(input_ids[0], skip_special_tokens=True)
                     tokens = text.split(' ')
                     if tokens[len(tokens) - 1] == '[END]':
