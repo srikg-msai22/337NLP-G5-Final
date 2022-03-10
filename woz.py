@@ -101,7 +101,7 @@ def main():
 
     if tuned_model == 0:
         tuned = 'gpt2'
-        test_name = 'woz2.test_a.txt'
+        test_name = 'woz.test_a.txt'
     elif tuned_model == 1:
         tuned = '/home/ddemeter/CS-497/b'
         test_name = 'woz.test_b.txt'
@@ -146,35 +146,39 @@ def main():
             ref = text[1].strip(' ')
             obs = obs + 1
             in_ids = tokenizer.encode(prompt, add_special_tokens=True)
-            if len(in_ids) >= max_len:
-                continue
+            # if len(in_ids) >= max_len:
+            #     continue
 
             if gen_mode == 0:
                 seq_len = 0
                 bDone = False
 
-                while not bDone:
-                    input_ids = torch.tensor(in_ids).unsqueeze(0)
-                    input_ids = input_ids.cuda()
-                    try:
+                try:
+                    while not bDone:
+                        input_ids = torch.tensor(in_ids).unsqueeze(0)
+                        input_ids = input_ids.cuda()
+
                         outputs = model(input_ids, labels=input_ids)
-                    except:
-                        print("!!error with this line: {}".format(line))
-                        break
-                    decoded = []
-                    for i in range(outputs[1].size(1)):
-                        decoded.append(torch.argmax(outputs[1][0][i][:]).item())
-                    decoded = torch.tensor(decoded)
-                    decoded = decoded.cuda()
-                    in_ids.append(decoded[decoded.size(0) - 1].item())
-                    input_ids = torch.tensor(in_ids).unsqueeze(0)
-                    text = tokenizer.decode(input_ids[0], skip_special_tokens=True)
-                    tokens = text.split(' ')
-                    print(tokens)
-                    if tokens[len(tokens) - 1] == '[END]':
-                        bDone = True
-                    if len(tokens) >= max_len:
-                        bDone = True
+
+                        decoded = []
+                        for i in range(outputs[1].size(1)):
+                            decoded.append(torch.argmax(outputs[1][0][i][:]).item())
+                        decoded = torch.tensor(decoded)
+                        decoded = decoded.cuda()
+                        in_ids.append(decoded[decoded.size(0) - 1].item())
+                        input_ids = torch.tensor(in_ids).unsqueeze(0)
+                        text = tokenizer.decode(input_ids[0], skip_special_tokens=True)
+                        tokens = text.split(' ')
+
+                        if tokens[len(tokens) - 1] == '[END]':
+                            bDone = True
+                        if len(tokens) >= max_len:
+                            bDone = True
+                    print(text)
+                except:
+                    print("!!error with this line: {}".format(line))
+                    print(text)
+                    break
 
             if gen_mode == 1:
                 input_ids = torch.tensor(in_ids).unsqueeze(0)
