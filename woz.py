@@ -153,7 +153,11 @@ def main():
                 while not bDone:
                     input_ids = torch.tensor(in_ids).unsqueeze(0)
                     input_ids = input_ids.cuda()
-                    outputs = model(input_ids, labels=input_ids)
+                    try:
+                        outputs = model(input_ids, labels=input_ids)
+                    except:
+                        print("!!error with this line: {}".format(line))
+                        break
                     decoded = []
                     for i in range(outputs[1].size(1)):
                         decoded.append(torch.argmax(outputs[1][0][i][:]).item())

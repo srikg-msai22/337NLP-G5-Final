@@ -434,6 +434,7 @@ def main():
         lm_datasets = tokenized_datasets.map(
             group_texts,
             batched=True,
+            batch_size=700,
             num_proc=data_args.preprocessing_num_workers,
             load_from_cache_file=not data_args.overwrite_cache,
             desc=f"Grouping texts in chunks of {block_size}",
