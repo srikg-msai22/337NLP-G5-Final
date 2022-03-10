@@ -101,7 +101,7 @@ def main():
 
     if tuned_model == 0:
         tuned = 'gpt2'
-        test_name = 'woz.test_a.txt'
+        test_name = 'woz2.test_a.txt'
     elif tuned_model == 1:
         tuned = '/home/ddemeter/CS-497/b'
         test_name = 'woz.test_b.txt'
@@ -152,9 +152,10 @@ def main():
             if gen_mode == 0:
                 seq_len = 0
                 bDone = False
+                input_ids = torch.tensor(in_ids).unsqueeze(0)
+                input_ids = input_ids.cuda()
                 while not bDone:
-                    input_ids = torch.tensor(in_ids).unsqueeze(0)
-                    input_ids = input_ids.cuda()
+
                     try:
                         outputs = model(input_ids, labels=input_ids)
                     except:
