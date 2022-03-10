@@ -146,7 +146,7 @@ def main():
             ref = text[1].strip(' ')
             obs = obs + 1
             in_ids = tokenizer.encode(prompt, add_special_tokens=True)
-            if len(prompt) >= 145:
+            if len(in_ids) >= max_len:
                 continue
 
             if gen_mode == 0:
