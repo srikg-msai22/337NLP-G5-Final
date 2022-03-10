@@ -152,10 +152,10 @@ def main():
             if gen_mode == 0:
                 seq_len = 0
                 bDone = False
-                input_ids = torch.tensor(in_ids).unsqueeze(0)
-                input_ids = input_ids.cuda()
-                while not bDone:
 
+                while not bDone:
+                    input_ids = torch.tensor(in_ids).unsqueeze(0)
+                    input_ids = input_ids.cuda()
                     try:
                         outputs = model(input_ids, labels=input_ids)
                     except:
@@ -167,8 +167,7 @@ def main():
                     decoded = torch.tensor(decoded)
                     decoded = decoded.cuda()
                     in_ids.append(decoded[decoded.size(0) - 1].item())
-                    # input_ids = torch.tensor(in_ids).unsqueeze(0)
-                    input_ids = torch.tensor(in_ids)
+                    input_ids = torch.tensor(in_ids).unsqueeze(0)
                     text = tokenizer.decode(input_ids[0], skip_special_tokens=True)
                     tokens = text.split(' ')
                     if tokens[len(tokens) - 1] == '[END]':
